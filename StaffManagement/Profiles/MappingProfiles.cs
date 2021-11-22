@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.DTO.UserDTOs;
+using Entities.DTO.WarehouseDTOs;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace StaffManagement.Profiles
         public MappingProfiles()
         {
             CreateMap<UserCreateDto, User>();
+            CreateMap<WarehouseCreateDTO, Warehouse>();
         }
     }
 }

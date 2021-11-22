@@ -14,6 +14,10 @@ namespace StaffManagement.Test
 {
     public class UserControllerTest
     {
+        private  Mock<IManagerContract> managerContractStub = new Mock<IManagerContract>();
+        private Mock<IMapper> mapperStub = new Mock<IMapper>();
+
+
         [Fact]
         public void CreateUser_WithUserToCreate_ReturnsCreatedUser()
         {
@@ -29,8 +33,6 @@ namespace StaffManagement.Test
                 FirstName = userToCreate.FirstName,
                 LastName = userToCreate.LastName
             };
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
             var controler = new UserController(managerContractStub.Object, mapperStub.Object);
 
             managerContractStub.Setup(x => x.userContract.Create(It.IsAny<User>()))
@@ -51,24 +53,17 @@ namespace StaffManagement.Test
         public void GetAllUsers_WithExistingUsers_ReturnsAllUsers()
         {
             //Arrange
-
             var expextedUsers = GetUsers();
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
             var controler = new UserController(managerContractStub.Object, mapperStub.Object);
 
             managerContractStub.Setup(x => x.userContract.GetAll())
                 .Returns(expextedUsers);
 
             //Act
-
             var result = controler.GetAllUsers();
 
             //Assert
-          
-
             var actualUsers = (result.Result as OkObjectResult).Value as List<User>;
-
             actualUsers.Should().BeEquivalentTo(expextedUsers);
 
         }
@@ -77,24 +72,17 @@ namespace StaffManagement.Test
         public void GetUserById_WithExistingUserId_ReturnsUser()
         {
             //Arrange
-
             var expextedUsers = GetUsers();
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
             var controler = new UserController(managerContractStub.Object, mapperStub.Object);
 
             managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
                 .Returns(expextedUsers[0]);
 
             //Act
-
             var result = controler.GetUserById(expextedUsers[0].Id);
 
             //Assert
-
-
             var actualUsers = (result.Result as OkObjectResult).Value as User;
-
             actualUsers.Should().BeEquivalentTo(expextedUsers[0]);
 
         }
@@ -103,22 +91,16 @@ namespace StaffManagement.Test
         public void GetUserById_WithoutExistingUserId_ReturnsNotFound()
         {
             //Arrange
-
             int userId = 1000;
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
             var controler = new UserController(managerContractStub.Object, mapperStub.Object);
 
             managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
                 .Returns((User) null);
 
             //Act
-
             var result = controler.GetUserById(userId);
 
             //Assert
-
-
             result.Result.Should().BeOfType<NotFoundResult>();
 
         }
@@ -128,8 +110,7 @@ namespace StaffManagement.Test
         {
             // Arrange
             var existingUser = GetUsers();
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
+          
             managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
                 .Returns(existingUser[0]);
             var userToUpdate = new User()
@@ -156,9 +137,7 @@ namespace StaffManagement.Test
         {
             // Arrange
             var existingUser = GetUsers();
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
-            managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
+             managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
                 .Returns(existingUser[0]);
            
 
@@ -177,24 +156,17 @@ namespace StaffManagement.Test
         [Fact]
         public void DeleteUserById_WithoutExistingUserId_ReturnsBadRequest()
         {
-            // Arrange
-          
-            var managerContractStub = new Mock<IManagerContract>();
-            var mapperStub = new Mock<IMapper>();
+            // Arrange          
             managerContractStub.Setup(x => x.userContract.GetById(It.IsAny<int>()))
                 .Returns((User)null);
-
-
+            
             var controler = new UserController(managerContractStub.Object, mapperStub.Object);
-
 
             // Act
             var result = controler.DeleteUserById(5);
 
             //Assert
             result.Should().BeOfType<BadRequestResult>();
-
-
         }
 
         private List<User> GetUsers()

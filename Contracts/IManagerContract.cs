@@ -10,6 +10,7 @@ namespace Contracts
     {
         IUserContract userContract { get; }
 
+        IWarehouseContract warehouseContract { get; }
         void Save();
     }
 }

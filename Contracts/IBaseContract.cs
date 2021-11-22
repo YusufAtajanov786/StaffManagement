@@ -13,6 +13,8 @@ namespace Contracts
 
         T Create(T entity);
 
+        T Get(int id);
+
         void Update(T entiry);
 
         void Delete(T entity);

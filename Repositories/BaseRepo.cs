@@ -27,7 +27,10 @@ namespace Repositories
             _repoContext.Set<T>().Remove(entity);
         }
 
-      
+        public virtual T Get(int id)
+        {
+            return _repoContext.Set<T>().Find(id);
+        }
 
         public IEnumerable<T> GetAll()
         {

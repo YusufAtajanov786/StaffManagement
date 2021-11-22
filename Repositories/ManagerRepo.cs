@@ -12,6 +12,7 @@ namespace Repositories
     {
         private readonly RepoContext _repoContext;
         private IUserContract _userContract;
+        private IWarehouseContract _warehouseContract;
         public ManagerRepo(RepoContext repoContext)
         {
             this._repoContext = repoContext ?? throw new ArgumentNullException(nameof(repoContext));
@@ -26,6 +27,17 @@ namespace Repositories
                 return _userContract;
             }
         }
+
+        public IWarehouseContract warehouseContract
+        {
+            get
+            {
+                if (_warehouseContract == null)
+                    _warehouseContract = new WarehouseRepo(_repoContext);
+                return _warehouseContract;
+            }
+        }
+
         public void Save()
         {
             _repoContext.SaveChanges();

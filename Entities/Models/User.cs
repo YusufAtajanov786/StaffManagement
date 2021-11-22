@@ -14,5 +14,6 @@ namespace Entities.Models
         public string Email { get; set; }
         public EnumRoles Role { get; set; }
 
+        public List<User_Warehouse> User_Warehouses { get; set; }
     }
 }

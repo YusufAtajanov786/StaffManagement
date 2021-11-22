@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Models
+namespace Entities.DTO.WarehouseDTOs
 {
-    public class Warehouse
+    public class WarehouseCreateDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public List<User_Warehouse> User_Warehouses { get; set; }
-
     }
 }
